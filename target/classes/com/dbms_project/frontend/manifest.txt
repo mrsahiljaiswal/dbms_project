@@ -1,0 +1,2 @@
+Main-Class: com.dbms_project.frontend.App
+Class-Path: lib/flatlaf-3.6.jar
