@@ -73,8 +73,8 @@ public class FlightSearchPanel extends JPanel {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "DB Error: " + ex.getMessage());
         }
-        final List<Integer> foundFlightIds = new ArrayList<>();
-        final List<String> foundFlightSummaries = new ArrayList<>();
+        final java.util.List<Integer> foundFlightIds = new java.util.ArrayList<>();
+        final java.util.List<String> foundFlightSummaries = new java.util.ArrayList<>();
         btnSearch.addActionListener(e -> {
             String source = (String) sourceBox.getSelectedItem();
             String dest = (String) destBox.getSelectedItem();
@@ -122,7 +122,13 @@ public class FlightSearchPanel extends JPanel {
             }
         });
         btnBook.addActionListener(e -> {
-            int selectedLine = resultArea.getCaretPosition() == 0 ? 0 : resultArea.getLineOfOffset(resultArea.getCaretPosition());
+            int selectedLine = 0;
+            try {
+                selectedLine = resultArea.getCaretPosition() == 0 ? 0 : resultArea.getLineOfOffset(resultArea.getCaretPosition());
+            } catch (javax.swing.text.BadLocationException ex) {
+                JOptionPane.showMessageDialog(this, "Error selecting flight: " + ex.getMessage());
+                return;
+            }
             if (foundFlightIds.isEmpty() || selectedLine >= foundFlightIds.size()) {
                 JOptionPane.showMessageDialog(this, "Please select a flight line in the results to book.");
                 return;
